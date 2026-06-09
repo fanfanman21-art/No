@@ -48,52 +48,59 @@ task.spawn(function()
         end
     end
 end)
+local AutoStartV3 = false
+
 Tab:AddToggle({
-				Name = "Auto Play Again",
-				Default = true,
-				Callback = function(Value)
-					getgenv().AutoPlayAgain = Value
+    Name = "Auto start V3",
+    Default = false,
+    Callback = function(Value)
+        AutoStartV3 = Value
 
-					task.spawn(function()
-						while getgenv().AutoPlayAgain do
-							task.wait(7.8)
+        if AutoStartV3 then
+            task.spawn(function()
+                while AutoStartV3 do
+                    local EventMobs = workspace:FindFirstChild("World Mobs")
+                        and workspace["World Mobs"]:FindFirstChild("Event Mobs")
 
-							local atom = workspace:FindFirstChild("World Mobs")
-							atom = atom and atom:FindFirstChild("Event Mobs")
-							atom = atom and atom:FindFirstChild("Great Droid")
+                    if EventMobs then
+                        local MobAlive = false
 
-							local dead = false
+                        for _, Mob in ipairs(EventMobs:GetChildren()) do
+                            local Humanoid = Mob:FindFirstChildOfClass("Humanoid")
 
-							if atom and atom:FindFirstChild("Humanoid") then
-								if atom.Humanoid.Health <= 0 then
-									dead = true
-								end
-							else
-								dead = true
-							end
+                            if Humanoid and Humanoid.Health > 0 then
+                                MobAlive = true
+                                break
+                            end
+                        end
 
-							if dead then
-								-- Skill 2 charge + release
-								pcall(function()
-									game.ReplicatedStorage.Remotes.SkillRemote:FireServer(unpack(chargeArgs))
-									task.wait(1)
-									game.ReplicatedStorage.Remotes.SkillRemote:FireServer(unpack(releaseArgs))
-								end)
+                        if not MobAlive and #EventMobs:GetChildren() > 0 then
+                            task.wait(4.5)
 
-								task.wait(3)
+                            pcall(function()
+                                game:GetService("ReplicatedStorage")
+                                    :WaitForChild("Packages")
+                                    :WaitForChild("_Index")
+                                    :WaitForChild("sleitnick_knit@1.4.7")
+                                    :WaitForChild("knit")
+                                    :WaitForChild("Services")
+                                    :WaitForChild("DungeonLobbyService")
+                                    :WaitForChild("RF")
+                                    :WaitForChild("StartDungeon")
+                                    :InvokeServer()
+                            end)
 
-								-- Start Dungeon mới
-								pcall(function()
-									game:GetService("ReplicatedStorage")
-									.Packages._Index["sleitnick_knit@1.4.7"]
-									.knit.Services.DungeonLobbyService.RF.StartDungeon
-									:InvokeServer()
-								end)
-							end
-						end
-					end)
-				end
-			})
+                            task.wait(4.5)
+                        end
+                    end
+
+                    task.wait(4.5)
+                end
+            end)
+        end
+    end
+})                         
+
 
 local SelectedTool = 2
 local AutoEquipTools = false
@@ -680,3 +687,37 @@ Tab:AddToggle({
 if AntiAFK then
     loadstring(game:HttpGet("https://raw.githubusercontent.com/KazeOnTop/Rice-Anti-Afk/main/Wind", true))()
 end
+local InfDamageSSJB = false
+
+Tab:AddToggle({
+    Name = "inf x0.25 damage Ssjb",
+    Default = false,
+    Callback = function(Value)
+        InfDamageSSJB = Value
+
+        if Value then
+            task.spawn(function()
+                while InfDamageSSJB do
+                    local args = {
+                        "Weapons_14_2",
+                        {},
+                        1
+                    }
+
+                    game:GetService("ReplicatedStorage")
+                        :WaitForChild("Packages")
+                        :WaitForChild("_Index")
+                        :WaitForChild("sleitnick_knit@1.4.7")
+                        :WaitForChild("knit")
+                        :WaitForChild("Services")
+                        :WaitForChild("SkillManagerV2")
+                        :WaitForChild("RE")
+                        :WaitForChild("ExecuteSkill")
+                        :FireServer(unpack(args))
+
+                    task.wait(0.0001)
+                end
+            end)
+        end
+    end
+})
