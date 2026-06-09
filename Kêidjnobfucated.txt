@@ -48,11 +48,11 @@ task.spawn(function()
         end
     end
 end)
-local AutoStartV3 = false
+local AutoStartV3 = true
 
 Tab:AddToggle({
     Name = "Auto start V3",
-    Default = false,
+    Default = true,
     Callback = function(Value)
         AutoStartV3 = Value
 
@@ -687,11 +687,11 @@ Tab:AddToggle({
 if AntiAFK then
     loadstring(game:HttpGet("https://raw.githubusercontent.com/KazeOnTop/Rice-Anti-Afk/main/Wind", true))()
 end
-local InfDamageSSJB = false
+local InfDamageSSJB = true
 
 Tab:AddToggle({
     Name = "inf x0.25 damage Ssjb",
-    Default = false,
+    Default = true,
     Callback = function(Value)
         InfDamageSSJB = Value
 
