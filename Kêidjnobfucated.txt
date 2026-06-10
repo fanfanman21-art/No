@@ -48,59 +48,52 @@ task.spawn(function()
         end
     end
 end)
-local AutoStartV3 = true
-
 Tab:AddToggle({
-    Name = "Auto start V3",
-    Default = true,
-    Callback = function(Value)
-        AutoStartV3 = Value
+				Name = "Auto Play Again",
+				Default = true,
+				Callback = function(Value)
+					getgenv().AutoPlayAgain = Value
 
-        if AutoStartV3 then
-            task.spawn(function()
-                while AutoStartV3 do
-                    local EventMobs = workspace:FindFirstChild("World Mobs")
-                        and workspace["World Mobs"]:FindFirstChild("Event Mobs")
+					task.spawn(function()
+						while getgenv().AutoPlayAgain do
+							task.wait(7.8)
 
-                    if EventMobs then
-                        local MobAlive = false
+							local atom = workspace:FindFirstChild("World Mobs")
+							atom = atom and atom:FindFirstChild("Event Mobs")
+							atom = atom and atom:FindFirstChild("Great Droid")
 
-                        for _, Mob in ipairs(EventMobs:GetChildren()) do
-                            local Humanoid = Mob:FindFirstChildOfClass("Humanoid")
+							local dead = false
 
-                            if Humanoid and Humanoid.Health > 0 then
-                                MobAlive = true
-                                break
-                            end
-                        end
+							if atom and atom:FindFirstChild("Humanoid") then
+								if atom.Humanoid.Health <= 0 then
+									dead = true
+								end
+							else
+								dead = true
+							end
 
-                        if not MobAlive and #EventMobs:GetChildren() > 0 then
-                            task.wait(4.5)
+							if dead then
+								-- Skill 2 charge + release
+								pcall(function()
+									game.ReplicatedStorage.Remotes.SkillRemote:FireServer(unpack(chargeArgs))
+									task.wait(1)
+									game.ReplicatedStorage.Remotes.SkillRemote:FireServer(unpack(releaseArgs))
+								end)
 
-                            pcall(function()
-                                game:GetService("ReplicatedStorage")
-                                    :WaitForChild("Packages")
-                                    :WaitForChild("_Index")
-                                    :WaitForChild("sleitnick_knit@1.4.7")
-                                    :WaitForChild("knit")
-                                    :WaitForChild("Services")
-                                    :WaitForChild("DungeonLobbyService")
-                                    :WaitForChild("RF")
-                                    :WaitForChild("StartDungeon")
-                                    :InvokeServer()
-                            end)
+								task.wait(3)
 
-                            task.wait(4.5)
-                        end
-                    end
-
-                    task.wait(4.5)
-                end
-            end)
-        end
-    end
-})                         
-
+								-- Start Dungeon mới
+								pcall(function()
+									game:GetService("ReplicatedStorage")
+									.Packages._Index["sleitnick_knit@1.4.7"]
+									.knit.Services.DungeonLobbyService.RF.StartDungeon
+									:InvokeServer()
+								end)
+							end
+						end
+					end)
+				end
+			})
 
 local SelectedTool = 2
 local AutoEquipTools = false
