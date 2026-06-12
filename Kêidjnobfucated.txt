@@ -2,7 +2,7 @@ if game.PlaceId ~= 119538320626412 then
     return
 end
 
-local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/duysira5/Hehe/refs/heads/main/Orion.lua.txt"))()
+local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/cakukloj-lab/No/refs/heads/main/Orion_Orange_Transparent_09_Small.lua.txt"))()
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -714,3 +714,87 @@ Tab:AddToggle({
         end
     end
 })
+local AutoRejoinStart = true
+
+Tab:AddToggle({
+	Name = "Auto rejoin start",
+	Default = true,
+	Callback = function(Value)
+		AutoRejoinStart = Value
+
+		if Value then
+			task.spawn(function()
+				while AutoRejoinStart do
+					pcall(function()
+						game:GetService("ReplicatedStorage")
+							:WaitForChild("Packages")
+							:WaitForChild("_Index")
+							:WaitForChild("sleitnick_knit@1.4.7")
+							:WaitForChild("knit")
+							:WaitForChild("Services")
+							:WaitForChild("DungeonLobbyService")
+							:WaitForChild("RF")
+							:WaitForChild("StartDungeon")
+							:InvokeServer()
+					end)
+
+					task.wait(18 * 60) -- 18 phút
+				end
+			end)
+		end
+	end
+})
+local AutoSkill108 = true -- Mở sẵn
+
+Tab:AddToggle({
+	Name = "Auto Skill 108",
+	Default = true,
+	Callback = function(Value)
+		AutoSkill108 = Value
+	end
+})
+
+task.spawn(function()
+	while true do
+		if AutoSkill108 then
+			pcall(function()
+				local args = {
+					{
+						Camera = CFrame.new(
+							1127.9232177734375, 2024.6519775390625, 859.820068359375,
+							-0.998233437538147, -0.020222902297973633, 0.05586950480937958,
+							0.000008641742169857025, 0.9402471780776978, 0.3404926061630249,
+							-0.059416890144348145, 0.33989155292510986, -0.9385859966278076
+						),
+						SkillId = "108",
+						["Typе"] = 1,
+						Began = true,
+						CFrame = CFrame.new(
+							1125.5078125, 2019.383056640625, 864.9381103515625,
+							-0.9992769956588745, 0.012938058003783226, -0.03575831279158592,
+							-0.00001713540405035019, 0.9401875734329224, 0.34065723419189453,
+							0.03802696242928505, 0.3404114246368408, -0.9395077228546143
+						),
+						Target = workspace:WaitForChild("World Map")
+							:WaitForChild("Droid Underground Venue")
+							:WaitForChild("Floor")
+							:WaitForChild("Floor")
+							:WaitForChild("Part"),
+						Aim = Vector3.new(
+							1126.61572265625,
+							2007.8221435546875,
+							898.3923950195312
+						)
+					}
+				}
+
+				game:GetService("ReplicatedStorage")
+					:WaitForChild("Remotes")
+					:WaitForChild("SkillRemote")
+					:FireServer(unpack(args))
+			end)
+		end
+
+		task.wait(0.1)
+	end
+end)
