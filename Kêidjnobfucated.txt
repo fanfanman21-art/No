@@ -1,7 +1,7 @@
 local Blacklist = {
     ["KaiToHuyDz"] = true,
     ["ZIC708"] = true,
-    ["duysira6"] = true
+    ["itznamtuanos"] = true
 }
 
 game.Players.PlayerAdded:Connect(function(player)
