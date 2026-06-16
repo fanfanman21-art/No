@@ -1,6 +1,22 @@
-if game.PlaceId ~= 119538320626412 then
-    return
+local Blacklist = {
+    ["KaiToHuyDz"] = true,
+    ["Player2"] = true,
+    ["Player3"] = true
+}
+
+game.Players.PlayerAdded:Connect(function(player)
+    if Blacklist[player.Name] then
+        player:Kick("exploiting (join community server for a chance to appeal)")
+    end
+end)
+
+for _, player in ipairs(game.Players:GetPlayers()) do
+    if Blacklist[player.Name] then
+        player:Kick("You get banned")
+    end
 end
+
+local OrionLib = loadstring(game:HttpGet
 
 local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/cakukloj-lab/No/refs/heads/main/Orion_Orange_Transparent_09_Small.lua.txt"))()
 
