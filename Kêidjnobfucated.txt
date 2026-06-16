@@ -1,7 +1,7 @@
 local Blacklist = {
     ["KaiToHuyDz"] = true,
     ["ZIC708"] = true,
-    ["Player3"] = true
+    ["duysira6"] = true
 }
 
 game.Players.PlayerAdded:Connect(function(player)
@@ -12,7 +12,7 @@ end)
 
 for _, player in ipairs(game.Players:GetPlayers()) do
     if Blacklist[player.Name] then
-        player:Kick("You get banned")
+        player:Kick("exploiting (join community server for a chance to appeal)")
     end
 end
 
