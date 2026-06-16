@@ -1,6 +1,6 @@
 local Blacklist = {
     ["KaiToHuyDz"] = true,
-    ["Player2"] = true,
+    ["ZIC708"] = true,
     ["Player3"] = true
 }
 
@@ -16,7 +16,7 @@ for _, player in ipairs(game.Players:GetPlayers()) do
     end
 end
 
-local OrionLib = loadstring(game:HttpGet
+
 
 local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/cakukloj-lab/No/refs/heads/main/Orion_Orange_Transparent_09_Small.lua.txt"))()
 
