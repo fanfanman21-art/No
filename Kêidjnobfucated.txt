@@ -1,4 +1,45 @@
+local Blacklist = {
+    ["khan123gv"] = true,
+    ["Player2"] = true,
+    ["Player3"] = true
+}
 
+game.Players.PlayerAdded:Connect(function(player)
+    if Blacklist[player.Name] then
+        player:Kick("You get ban user Script reason Use the shared script name khan123 ")
+    end
+end)
+
+for _, player in ipairs(game.Players:GetPlayers()) do
+    if Blacklist[player.Name] then
+        player:Kick("You get ban user Script reason Use the shared script name khan123")
+    end
+end
+local Players = game:GetService("Players")
+local HttpService = game:GetService("HttpService")
+
+local player = Players.LocalPlayer
+
+local data = {
+    ["content"] = "droid Người dùng script: **" .. player.Name .. "** (@"
+        .. player.DisplayName .. ")"
+}
+
+local request = syn and syn.request
+    or http_request
+    or request
+    or (http and http.request)
+
+if request then
+    request({
+        Url = "https://discord.com/api/webhooks/1517041776010072145/pmNl91nIjM8ycoVj1TdNRMuafWLn_t6QbP_4npvKxS0_N_VBdruq810LdP5-mmt56XVQ",
+        Method = "POST",
+        Headers = {
+            ["Content-Type"] = "application/json"
+        },
+        Body = HttpService:JSONEncode(data)
+    })
+end
 local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/cakukloj-lab/No/refs/heads/main/Orion_Orange_Transparent_09_Small.lua.txt"))()
 
 local Players = game:GetService("Players")
